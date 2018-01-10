@@ -13,6 +13,8 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var previewView: UIView!
+    @IBOutlet weak var faceBoundsView: UIView!
+    @IBOutlet weak var messageLabel: UILabel!
     
     var captureSession: AVCaptureSession?
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -21,7 +23,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+        faceBoundsView.layer.cornerRadius = faceBoundsView.bounds.height * 0.5
+        faceBoundsView.layer.masksToBounds = true
+        
         let captureDevice = self.getDevice(position: .front)
         let input = try! AVCaptureDeviceInput(device: captureDevice)
         
@@ -38,6 +42,17 @@ class ViewController: UIViewController {
         captureSession?.addOutput(capturePhotoOutput)
         
         captureSession?.startRunning()
+        
+        self.watchPhoto()
+    }
+    
+    func setFaceBoundsViewBorderColor(_ color: UIColor) {
+        self.faceBoundsView.layer.borderWidth = 1
+        self.faceBoundsView.layer.borderColor = color.cgColor
+    }
+    
+    func showMessage(_ message: String) {
+        self.messageLabel.text = message
     }
 
     func getDevice(position: AVCaptureDevicePosition) -> AVCaptureDevice? {
@@ -55,9 +70,44 @@ class ViewController: UIViewController {
         
         return nil
     }
-
-    @IBAction func onTakePhotoPressed(_ sender: Any) {
-        // Make sure capturePhotoOutput is valid
+    
+    func detect() {
+        let imageOptions =  NSDictionary(object: NSNumber(value: 5) as NSNumber, forKey: CIDetectorImageOrientation as NSString)
+        let personciImage = CIImage.init(cgImage: imageView.image!.cgImage!)
+        let accuracy = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+        let faceDetector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: accuracy)
+        let faces = faceDetector?.features(in: personciImage, options: imageOptions as? [String : AnyObject])
+        
+        if let face = faces?.first as? CIFaceFeature {
+            print("found bounds are x:\(face.bounds.origin.x) | y: \(face.bounds.origin.y) | w: \(face.bounds.size.width) | h: \(face.bounds.size.height)")
+            
+            if face.bounds.size.width < 1300 {
+                self.setFaceBoundsViewBorderColor(.red)
+                self.showMessage("Aproxime o rosto")
+            }
+            else if face.bounds.size.width > 1800 {
+                self.setFaceBoundsViewBorderColor(.red)
+                self.showMessage("Afaste o rosto")
+            }
+            else {
+                self.setFaceBoundsViewBorderColor(.green)
+                self.showMessage("Ok")
+            }
+            return
+        }
+        
+        self.showMessage("Assim não =(")
+        self.setFaceBoundsViewBorderColor(.red)
+    }
+    
+    func watchPhoto() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.capturePhoto()
+            self.watchPhoto()
+        }
+    }
+    
+    func capturePhoto() {
         guard let capturePhotoOutput = self.capturePhotoOutput else { return }
         
         // Get an instance of AVCapturePhotoSettings class
@@ -65,11 +115,13 @@ class ViewController: UIViewController {
         // Set photo settings for our need
         photoSettings.isAutoStillImageStabilizationEnabled = true
         photoSettings.isHighResolutionPhotoEnabled = true
-        photoSettings.flashMode = .auto
+        photoSettings.flashMode = .off
         capturePhotoOutput.capturePhoto(with: photoSettings, delegate: self)
-        self.captureSession?.stopRunning()
     }
-    
+
+    @IBAction func takePhoto(_ sender: Any) {
+        self.capturePhoto()
+    }
 }
 
 extension ViewController : AVCapturePhotoCaptureDelegate {
@@ -97,6 +149,8 @@ extension ViewController : AVCapturePhotoCaptureDelegate {
         if let image = capturedImage {
             // Save our captured image to photos album
             self.imageView.image = image
+            
+            self.detect()
         }
     }
 }

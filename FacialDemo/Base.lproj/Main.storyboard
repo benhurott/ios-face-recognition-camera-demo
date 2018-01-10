@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,45 +15,70 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FacialDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lVj-pd-dOM">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDX-ET-4Mt">
-                                <rect key="frame" x="-0.5" y="20" width="375" height="647"/>
+                                <rect key="frame" x="-0.5" y="20" width="320" height="548"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l7R-Im-UxC">
-                                <rect key="frame" x="87" y="607" width="200" height="40"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e6A-i4-BuB">
+                                <rect key="frame" x="35" y="169" width="250" height="250"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="Znt-tw-2fn"/>
-                                    <constraint firstAttribute="height" constant="40" id="v8y-Dk-CpG"/>
+                                    <constraint firstAttribute="width" constant="250" id="ZZO-C7-siy"/>
+                                    <constraint firstAttribute="height" constant="250" id="fPI-Fl-5Wl"/>
+                                </constraints>
+                            </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S1b-kM-xu7">
+                                <rect key="frame" x="60" y="508" width="200" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Nxm-an-KvG"/>
+                                    <constraint firstAttribute="height" constant="40" id="h5f-du-o8k"/>
                                 </constraints>
                                 <state key="normal" title="TAKE PHOTO"/>
                                 <connections>
-                                    <action selector="onTakePhotoPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gwj-v0-JRO"/>
+                                    <action selector="takePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ymp-8h-d84"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xlu-mG-FqP">
+                                <rect key="frame" x="35" y="70" width="250" height="30"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="i4x-nb-YvL"/>
+                                    <constraint firstAttribute="width" constant="250" id="l80-g3-hzh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="e6A-i4-BuB" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="0SN-w0-Dj6"/>
                             <constraint firstItem="KDX-ET-4Mt" firstAttribute="centerX" secondItem="lVj-pd-dOM" secondAttribute="centerX" id="1ul-Qq-qkk"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="l7R-Im-UxC" secondAttribute="bottom" constant="20" id="BbR-nw-6na"/>
+                            <constraint firstItem="S1b-kM-xu7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5GD-hb-2OH"/>
+                            <constraint firstItem="Xlu-mG-FqP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="DRX-wW-lke"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="S1b-kM-xu7" secondAttribute="bottom" constant="20" id="JNZ-9l-h9H"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lVj-pd-dOM" secondAttribute="bottom" id="Qsv-40-AOo"/>
                             <constraint firstItem="lVj-pd-dOM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="SOv-sc-OoE"/>
                             <constraint firstItem="lVj-pd-dOM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="SeN-6d-cra"/>
                             <constraint firstItem="KDX-ET-4Mt" firstAttribute="height" secondItem="lVj-pd-dOM" secondAttribute="height" id="VV4-Au-lRA"/>
-                            <constraint firstItem="l7R-Im-UxC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XgP-z9-trI"/>
+                            <constraint firstItem="e6A-i4-BuB" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="aEY-Wx-lMa"/>
                             <constraint firstItem="KDX-ET-4Mt" firstAttribute="width" secondItem="lVj-pd-dOM" secondAttribute="width" id="fis-u5-jpC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lVj-pd-dOM" secondAttribute="trailing" id="iJU-ci-ih0"/>
                             <constraint firstItem="KDX-ET-4Mt" firstAttribute="centerY" secondItem="lVj-pd-dOM" secondAttribute="centerY" id="lhW-1S-b0w"/>
+                            <constraint firstItem="Xlu-mG-FqP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="nxa-ng-Vxh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="faceBoundsView" destination="e6A-i4-BuB" id="RqW-tF-5Wf"/>
                         <outlet property="imageView" destination="lVj-pd-dOM" id="Lia-3U-Lak"/>
+                        <outlet property="messageLabel" destination="Xlu-mG-FqP" id="YN7-HI-v4v"/>
                         <outlet property="previewView" destination="KDX-ET-4Mt" id="wDF-9C-D4m"/>
                     </connections>
                 </viewController>
