@@ -20,7 +20,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+        //let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+        let captureDevice = self.getDevice(position: .front)
         let input = try! AVCaptureDeviceInput(device: captureDevice)
         
         captureSession = AVCaptureSession()
@@ -34,9 +35,20 @@ class ViewController: UIViewController {
         captureSession?.startRunning()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func getDevice(position: AVCaptureDevicePosition) -> AVCaptureDevice? {
+        if let deviceDescoverySession = AVCaptureDeviceDiscoverySession.init(
+            deviceTypes: [AVCaptureDeviceType.builtInWideAngleCamera],
+            mediaType: AVMediaTypeVideo,
+            position: AVCaptureDevicePosition.unspecified) {
+            
+            for device in deviceDescoverySession.devices {
+                if device.position == position {
+                    return device
+                }
+            }
+        }
+        
+        return nil
     }
 
     @IBAction func onTakePhotoPressed(_ sender: Any) {
